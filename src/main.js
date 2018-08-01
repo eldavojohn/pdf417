@@ -1,6 +1,6 @@
 import createPDF417 from './pdf417-min';
 
-function drawBarcode(canvas, barcodeMatrix, blockWidth, blockHeight) {
+function drawBarcode(canvas, barcodeMatrix) {
   const ctx = canvas.getContext('2d');
   let positionY = 0;
   for (let row = 0; row < barcodeMatrix.num_rows; row += 1) {
@@ -11,20 +11,20 @@ function drawBarcode(canvas, barcodeMatrix, blockWidth, blockHeight) {
       } else {
         ctx.fillStyle = '#FFF';
       }
-      ctx.fillRect(positionX, positionY, blockWidth, blockHeight);
-      positionX += blockWidth;
+      ctx.fillRect(positionX, positionY, 1, 1);
+      positionX += 1;
     }
-    positionY += blockHeight;
+    positionY += 1;
   }
 }
 
-export default function generateBarcode(text, blockWidth, blockHeight) {
+export default function generateBarcode(text) {
   const canvas = document.createElement('canvas');
   const PDF417 = createPDF417();
   PDF417.init(text);
   const barcodeMatrix = PDF417.getBarcodeArray();
-  canvas.width = blockWidth * barcodeMatrix.num_cols;
-  canvas.height = blockHeight * barcodeMatrix.num_rows;
-  drawBarcode(canvas, barcodeMatrix, blockWidth, blockHeight);
+  canvas.width = barcodeMatrix.num_cols;
+  canvas.height = barcodeMatrix.num_rows;
+  drawBarcode(canvas, barcodeMatrix);
   return canvas.toDataURL();
 }
