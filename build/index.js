@@ -2369,29 +2369,32 @@ var _pdf417Min2 = _interopRequireDefault(_pdf417Min);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function drawBarcode(canvas, barcodeMatrix, blockWidth, blockHeight) {
+function drawBarcode(canvas, barcodeMatrix) {
   var ctx = canvas.getContext('2d');
   var positionY = 0;
   for (var row = 0; row < barcodeMatrix.num_rows; row += 1) {
     var positionX = 0;
     for (var col = 0; col < barcodeMatrix.num_cols; col += 1) {
       if (barcodeMatrix.bcode[row][col] === '1') {
-        ctx.fillRect(positionX, positionY, blockWidth, blockHeight);
+        ctx.fillStyle = '#000';
+      } else {
+        ctx.fillStyle = '#FFF';
       }
-      positionX += blockWidth;
+      ctx.fillRect(positionX, positionY, 1, 1);
+      positionX += 1;
     }
-    positionY += blockHeight;
+    positionY += 1;
   }
 }
 
-function generateBarcode(text, blockWidth, blockHeight) {
+function generateBarcode(text) {
   var canvas = document.createElement('canvas');
   var PDF417 = (0, _pdf417Min2.default)();
   PDF417.init(text);
   var barcodeMatrix = PDF417.getBarcodeArray();
-  canvas.width = blockWidth * barcodeMatrix.num_cols;
-  canvas.height = blockHeight * barcodeMatrix.num_rows;
-  drawBarcode(canvas, barcodeMatrix, blockWidth, blockHeight);
+  canvas.width = barcodeMatrix.num_cols;
+  canvas.height = barcodeMatrix.num_rows;
+  drawBarcode(canvas, barcodeMatrix);
   return canvas.toDataURL();
 }
 

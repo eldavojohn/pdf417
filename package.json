@@ -5,7 +5,7 @@
     "barcode",
     "pdf417"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Barcode generator in PDF417 format.",
   "homepage": "https://github.com/eldavojohn/pdf417",
   "repository": {
